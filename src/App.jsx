@@ -277,6 +277,23 @@ function App() {
           ))}
         </section>
 
+        <section className="recent-row">
+          <div className="section-heading">
+            <h3>Recent searches</h3>
+          </div>
+          <div className="recent-list">
+            {recentSearches.length ? (
+              recentSearches.map((item) => (
+                <button key={item} type="button" className="quick-pill" onClick={() => updateQuery(item)}>
+                  {item}
+                </button>
+              ))
+            ) : (
+              <span className="muted-label">No recent searches yet.</span>
+            )}
+          </div>
+        </section>
+
         <section className="token-box">
           <label htmlFor="token-input">Optional GitHub token</label>
           <input
@@ -339,15 +356,13 @@ function App() {
             </section>
 
             <section className="analytics-grid">
-              <div className="card">
+              <div className="card analytic-card">
                 <div className="section-title-row">
                   <h3>Language distribution</h3>
                 </div>
                 <div className="donut-wrap">
-                  <div className="donut-chart" style={{ '--segments': JSON.stringify(Object.entries(stats.languages)).length }}>
-                    {Object.entries(stats.languages).map(([lang, count], index) => (
-                      <span key={lang} style={{ '--index': index, '--value': `${(count / repos.length) * 100}%` }} />
-                    ))}
+                  <div className="donut-chart" aria-label="Language distribution chart">
+                    <div className="donut-inner" />
                   </div>
                   <ul className="legend-list">
                     {Object.entries(stats.languages).slice(0, 5).map(([lang, count]) => (
@@ -357,7 +372,7 @@ function App() {
                 </div>
               </div>
 
-              <div className="card">
+              <div className="card analytic-card">
                 <div className="section-title-row">
                   <h3>Top repositories</h3>
                 </div>
@@ -376,7 +391,7 @@ function App() {
             </section>
 
             <section className="visual-grid">
-              <div className="card">
+              <div className="card analytic-card">
                 <div className="section-title-row">
                   <h3>Commit activity</h3>
                 </div>
@@ -391,7 +406,7 @@ function App() {
                 </div>
               </div>
 
-              <div className="card">
+              <div className="card analytic-card">
                 <div className="section-title-row">
                   <h3>Repos by stars</h3>
                 </div>
